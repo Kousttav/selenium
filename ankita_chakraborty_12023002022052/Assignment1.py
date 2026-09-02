@@ -6,86 +6,99 @@ import time
 # ASSIGNMENT 1: WEB ELEMENT IDENTIFICATION
 # ==========================================
 
-# Open Chrome
 driver = webdriver.Chrome()
 
-# Open webpage
 driver.get("https://testautomationpractice.blogspot.com/")
 
-# Maximize browser
 driver.maximize_window()
 
-time.sleep(2)
+time.sleep(3)
+
 
 # ==========================================
 # 1. By.ID
-# Locate the Name field
 # ==========================================
 
 name_field = driver.find_element(By.ID, "name")
-print("By.ID:", name_field.get_attribute("id"))
 
-# Fill the Name field
-name_field.send_keys("Ankita Chakraborty")
+print("1. By.ID")
+print("Name field found:", name_field.get_attribute("placeholder"))
 
-time.sleep(1)
 
 # ==========================================
 # 2. By.NAME
-# Locate Gender using its name attribute
 # ==========================================
 
-gender = driver.find_element(By.NAME, "gender")
-print("By.NAME:", gender.get_attribute("name"))
+print("\n2. By.NAME")
 
-# Select gender
-gender.click()
+# Find all elements having a name attribute
+name_elements = driver.find_elements(By.CSS_SELECTOR, "[name]")
 
-time.sleep(1)
+print("Number of elements having name attribute:",
+      len(name_elements))
+
+for element in name_elements:
+    print("Name attribute:",
+          element.get_attribute("name"))
+
+
+# Use the first element that has a name attribute
+if len(name_elements) > 0:
+
+    name_value = name_elements[0].get_attribute("name")
+
+    name_element = driver.find_element(
+        By.NAME,
+        name_value
+    )
+
+    print("By.NAME - Element found:",
+          name_value)
+
+else:
+    print("No element with NAME attribute found.")
+
 
 # ==========================================
 # 3. By.TAG_NAME
-# Locate an input element
 # ==========================================
 
-input_element = driver.find_element(By.TAG_NAME, "input")
-print("By.TAG_NAME:", input_element.tag_name)
+heading = driver.find_element(By.TAG_NAME, "h1")
 
-time.sleep(1)
+print("\n3. By.TAG_NAME")
+print("Heading:", heading.text)
+
 
 # ==========================================
 # 4. By.LINK_TEXT
-# Locate a specific link
 # ==========================================
 
-print("\n--- LINK TEXT ---")
+home_link = driver.find_element(
+    By.LINK_TEXT,
+    "Home"
+)
 
-link = driver.find_element(By.LINK_TEXT, "Udemy Courses")
+print("\n4. By.LINK_TEXT")
+print("Link found:", home_link.text)
 
-print("Link Text:", link.text)
-print("Href:", link.get_attribute("href"))
-
-time.sleep(1)
 
 # ==========================================
 # 5. By.CLASS_NAME
-# Locate Submit button
 # ==========================================
 
-button = driver.find_element(By.CLASS_NAME, "submit-btn")
+class_element = driver.find_element(
+    By.CLASS_NAME,
+    "form-control"
+)
 
-print("By.CLASS_NAME:", button.get_attribute("class"))
+print("\n5. By.CLASS_NAME")
+print("Class:", class_element.get_attribute("class"))
 
-time.sleep(2)
-
-# ==========================================
-# Keep browser open
-# ==========================================
-
-time.sleep(10)
 
 # ==========================================
-# Close browser
+# Wait
 # ==========================================
+
+time.sleep(3)
 
 driver.quit()
